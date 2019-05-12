@@ -166,6 +166,6 @@ GameState::~GameState()
 	{
 		delete board[x];
 	}
-	delete board;
+	delete[] board;
 }
 
