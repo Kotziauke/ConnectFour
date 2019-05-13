@@ -20,6 +20,11 @@ int main(int argc, char* argv[])
 	{
 		//ruch gracza:
 		board->display();
+		if (board->getChildren().empty() == true)
+		{
+			std::cout << "Koniec ruchów...";
+			break;
+		}
 		GameState* next_turn = NULL;
 		do
 		{
@@ -42,6 +47,11 @@ int main(int argc, char* argv[])
 		
 		//ruch komputera:
 		board->display();
+		if (board->getChildren().empty() == true)
+		{
+			std::cout << "Koniec ruchów...";
+			break;
+		}
 		std::pair<double, State*> p = alphaBeta(board, depth, -INFINITY, INFINITY);
 		board = dynamic_cast<GameState*>(p.second->getRootMove());
 		board->makeRoot();
