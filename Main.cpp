@@ -1,76 +1,23 @@
 #include "GameState.h"
 #include "AlphaBeta.h"
 
-void ncurses_init();
-void ncurses_quit();
+void ncursesInit();
+void ncursesQuit();
+void startGame(int awidth, int aheight, Player awho_starts, double adepth);
+GameState* humanTurn(GameState* aobj, int acolumn);
+GameState* computerTurn(GameState* aobj, double adepth);
 
 int main(int argc, char* argv[])
 {
-	ncurses_init();
-	//ustawienia gry
-	int board_width = 7;
-	int board_height = 5;
-	Player who_starts = human;
-	double depth = 2.0;
+	ncursesInit();
 	
-	GameState* initial_state = new GameState{ who_starts, board_width, board_height };
-	GameState* board = initial_state;
+	startGame(7, 5, human, 2.0);
 	
-	while (1)
-	{
-		//ruch gracza:
-		erase();
-		board->display();
-		if (board->getChildren().empty() == true)
-		{
-			printw("Koniec ruchów...");
-			break;
-		}
-		GameState* next_turn = NULL;
-		do
-		{
-			int column = getch() - 48;
-			if (column < 0 || column >= board_width)
-			{
-				continue;
-			}
-			next_turn = board->dropChecker(column);
-		} while (next_turn == NULL);
-		board = next_turn;
-		board->makeRoot();
-		if (board->getH() == -INF)
-		{
-			board->display();
-			printw("Wygrana gracza!");
-			break;
-		}
-		
-		//ruch komputera:
-		board->display();
-		if (board->getChildren().empty() == true)
-		{
-			printw("Koniec ruchów...");
-			break;
-		}
-		std::pair<double, State*> p = alphaBeta(board, depth, -INFINITY, INFINITY);
-		board = dynamic_cast<GameState*>(p.second->getRootMove());
-		board->makeRoot();
-		if (board->getH() == INF)
-		{
-			board->display();
-			printw("Wygrana komputera...");
-			break;
-		}
-	}
-	getch();
-	delete initial_state; //usunie rekurencyjnie wszystkie stany potomne
-	
-	
-	ncurses_quit();
+	ncursesQuit();
 	return 0;
 }
 
-void ncurses_init()
+void ncursesInit()
 {
 	initscr();
 	raw();
@@ -85,9 +32,82 @@ void ncurses_init()
 	init_pair(pair_cursor, COLOR_YELLOW, -1);
 }
 
-
-void ncurses_quit()
+void ncursesQuit()
 {
 	endwin();
+}
+
+void startGame(int awidth, int aheight, Player awho_starts, double adepth)
+{
+	GameState* initial_state = new GameState{ awho_starts, awidth, aheight };
+	GameState* board = NULL;
+	if (awho_starts == human)
+	{
+		board = initial_state;
+	}
+	else
+	{
+		board = computerTurn(initial_state, adepth);
+	}
+	
+	while (1)
+	{
+		//ruch gracza:
+		erase();
+		board->display();
+		if (board->isTerminal() == true)
+		{
+			printw("Koniec ruchów...");
+			break;
+		}
+		board = humanTurn(board, getch() - 48);
+		if (board->getH() == -INF)
+		{
+			erase();
+			board->display();
+			printw("Wygrana gracza!");
+			break;
+		}
+		
+		//ruch komputera:
+		if (board->isTerminal() == true)
+		{
+			erase();
+			board->display();
+			printw("Koniec ruchów...");
+			break;
+		}
+		board = computerTurn(board, adepth);
+		if (board->getH() == INF)
+		{
+			erase();
+			board->display();
+			printw("Wygrana komputera...");
+			break;
+		}
+	}
+	
+	getch();
+	delete initial_state; //usunie rekurencyjnie wszystkie stany potomne
+}
+
+GameState* humanTurn(GameState* aobj, int acolumn)
+{
+	GameState* next_turn = NULL;
+	do
+	{
+		next_turn = aobj->dropChecker(acolumn);
+	} while (next_turn == NULL);
+	aobj = next_turn;
+	aobj->makeRoot();
+	return aobj;
+}
+
+GameState* computerTurn(GameState* aobj, double adepth)
+{
+	std::pair<double, State*> turn = alphaBeta(aobj, adepth, -INFINITY, INFINITY);
+	aobj = dynamic_cast<GameState*>(turn.second->getRootMove());
+	aobj->makeRoot();
+	return aobj;
 }
 
