@@ -1,6 +1,5 @@
 #include "Ncurses.h"
 
-
 void ncursesInit()
 {
 	initscr();
