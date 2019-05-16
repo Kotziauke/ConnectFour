@@ -161,15 +161,60 @@ void GameState::display()
 			{
 			case 'o':
 				attrset(COLOR_PAIR(pair_human) | A_BOLD);
+				printw("o");
 				break;
 			case 'x':
 				attrset(COLOR_PAIR(pair_computer) | A_BOLD);
+				printw("x");
 				break;
 			case '.':
 				attrset(COLOR_PAIR(pair_empty) | A_BOLD);
+				printw(".");
 				break;
 			}
-			printw("%c", board[x][y]);
+			attrset(COLOR_PAIR(pair_default));
+		}
+		printw("\n");
+	}
+}
+
+void GameState::displayWithCursor(int acolumn)
+{
+	erase();
+	for (int i = acolumn; i > 0; i--)
+	{
+		printw(" ");
+	}
+	attrset(COLOR_PAIR(pair_cursor) | A_BOLD);
+	printw("V\n");
+	attrset(COLOR_PAIR(pair_default));
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			switch (board[x][y])
+			{
+			case 'o':
+				attrset(COLOR_PAIR(pair_human) | A_BOLD);
+				printw("o");
+				break;
+			case 'x':
+				attrset(COLOR_PAIR(pair_computer) | A_BOLD);
+				printw("x");
+				break;
+			case '.':
+				if (x == acolumn)
+				{
+					attrset(COLOR_PAIR(pair_cursor) | A_BOLD);
+					printw(":");
+				}
+				else
+				{
+					attrset(COLOR_PAIR(pair_empty) | A_BOLD);
+					printw(".");
+				}
+				break;
+			}
 			attrset(COLOR_PAIR(pair_default));
 		}
 		printw("\n");

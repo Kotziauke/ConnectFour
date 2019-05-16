@@ -49,22 +49,52 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 	{
 		board = computerTurn(initial_state, adepth);
 	}
+	int column = awidth / 2;
 	
 	while (1)
 	{
 		//ruch gracza:
-		erase();
-		board->display();
 		if (board->isTerminal() == true)
 		{
+			board->displayWithCursor(column);
 			printw("Koniec ruchów...");
 			break;
 		}
-		board = humanTurn(board, getch() - 48);
+		while (1)
+		{
+			board->displayWithCursor(column);
+			GameState* turn = NULL;
+			switch (getch())
+			{
+			case 260: //left
+				if (column > 0)
+				{
+					column--;
+				}
+				break;
+			case 261: //right
+				if (column < awidth - 1)
+				{
+					column++;
+				}
+				break;
+			case 32: //space
+				turn = humanTurn(board, column);
+				break;
+			case 27: //escape
+				delete initial_state;
+				return;
+			}
+			if (turn != NULL)
+			{
+				board = turn;
+				break;
+			}
+		}
+		//board = humanTurn(board, getch() - 48);
 		if (board->getH() == -INF)
 		{
-			erase();
-			board->display();
+			board->displayWithCursor(column);
 			printw("Wygrana gracza!");
 			break;
 		}
@@ -72,16 +102,14 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 		//ruch komputera:
 		if (board->isTerminal() == true)
 		{
-			erase();
-			board->display();
+			board->displayWithCursor(column);
 			printw("Koniec ruchów...");
 			break;
 		}
 		board = computerTurn(board, adepth);
 		if (board->getH() == INF)
 		{
-			erase();
-			board->display();
+			board->displayWithCursor(column);
 			printw("Wygrana komputera...");
 			break;
 		}
@@ -93,11 +121,11 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 
 GameState* humanTurn(GameState* aobj, int acolumn)
 {
-	GameState* next_turn = NULL;
-	do
+	GameState* next_turn = aobj->dropChecker(acolumn);
+	if (next_turn == NULL)
 	{
-		next_turn = aobj->dropChecker(acolumn);
-	} while (next_turn == NULL);
+		return NULL;
+	}
 	aobj = next_turn;
 	aobj->makeRoot();
 	return aobj;

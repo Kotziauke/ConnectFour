@@ -21,6 +21,7 @@ public:
 	bool isTerminal() override;
 	GameState* dropChecker(int acolumn);
 	void display() override;
+	void displayWithCursor(int acolumn);
 	~GameState();
 };
 
