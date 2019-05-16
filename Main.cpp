@@ -1,3 +1,5 @@
+#include <cstdlib>
+#include <ctime>
 #include "GameState.h"
 #include "AlphaBeta.h"
 
@@ -11,7 +13,7 @@ int main(int argc, char* argv[])
 {
 	ncursesInit();
 	
-	startGame(7, 5, human, 2.0);
+	startGame(7, 5, computer, 2.0);
 	
 	ncursesQuit();
 	return 0;
@@ -47,7 +49,8 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 	}
 	else
 	{
-		board = computerTurn(initial_state, adepth);
+		srand(time(NULL));
+		board = humanTurn(initial_state, rand() % awidth);
 	}
 	int column = awidth / 2;
 	
