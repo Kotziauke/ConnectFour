@@ -12,9 +12,135 @@ GameState* computerTurn(GameState* aobj, double adepth);
 int main(int argc, char* argv[])
 {
 	ncursesInit();
+	int option = 0;
+	int width = 7;
+	int height = 5;
+	Player who_starts = human;
+	double depth = 2.0;
 	
-	startGame(7, 5, computer, 2.0);
-	
+	bool loop = true;
+	while (loop)
+	{
+		erase();
+		printw("  # Connect 4 #\n");
+		printw("\n");
+		printw("Rozmiar planszy:\n");
+		printw("-szerokosc: ");
+		printw(option == 0 ? "< %d >\n" : "  %d\n", width);
+		printw("-wysokosc:  ");
+		printw(option == 1 ? "< %d >\n" : "  %d\n", height);
+		printw("\n");
+		printw("Poziom trudnosci:\n");
+		printw("-glebokosc: ");
+		printw(option == 2 ? "< %.0lf >\n" : "  %.0lf\n", depth);
+		printw("-zaczyna:  ");
+		if (who_starts == human)
+		{
+			printw(option == 3 ? "< TY >\n" : "  TY\n");
+		}
+		else
+		{
+			printw(option == 3 ? "< SI >\n" : "  SI\n");
+		}
+		printw("\n");
+		printw(option == 4 ? "    [ START ]\n" : "      START\n");
+		printw(option == 5 ? "    [ WYJDZ ]\n" : "      WYJDZ\n");
+		switch (getch())
+		{
+		case 259: //up
+			if (option > 0)
+			{
+				option--;
+			}
+			break;
+		case 258: //down
+			if(option < 5)
+			{
+				option++;
+			}
+			break;
+		case 260: //left
+			switch (option)
+			{
+			case 0: //width
+				if (width > 4)
+				{
+					width--;
+				}
+				break;
+			case 1: //height
+				if (height > 4)
+				{
+					height--;
+				}
+				break;
+			case 2: //depth
+				if (depth > 1)
+				{
+					depth--;
+				}
+				break;
+			case 3: //who_starts
+				if (who_starts == human)
+				{
+					who_starts = computer;
+				}
+				else
+				{
+					who_starts = human;
+				}
+				break;
+			}
+			break;
+		case 261: //right
+			switch (option)
+			{
+			case 0: //width
+				if (width < 9)
+				{
+					width++;
+				}
+				break;
+			case 1: //height
+				if (height < 9)
+				{
+					height++;
+				}
+				break;
+			case 2: //depth
+				if (depth < 3)
+				{
+					depth++;
+				}
+				break;
+			case 3: //who_starts
+				if (who_starts == human)
+				{
+					who_starts = computer;
+				}
+				else
+				{
+					who_starts = human;
+				}
+				break;
+			}
+			break;
+		case 10: //return
+			switch (option)
+			{
+			case 4: //start
+				startGame(width, height, who_starts, depth);
+				break;
+			case 5: //exit
+				loop = false;
+				break;
+			}
+			break;
+		case 27: //escape
+			option = 5;
+			break;
+		}
+	}
 	ncursesQuit();
 	return 0;
 }
@@ -60,7 +186,7 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 		if (board->isTerminal() == true)
 		{
 			board->displayWithCursor(column);
-			printw("Koniec ruchów...");
+			printw("Koniec ruchow...\n");
 			break;
 		}
 		while (1)
@@ -81,7 +207,7 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 					column++;
 				}
 				break;
-			case 32: //space
+			case 10: //return
 				turn = humanTurn(board, column);
 				break;
 			case 27: //escape
@@ -98,7 +224,7 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 		if (board->getH() == -INF)
 		{
 			board->displayWithCursor(column);
-			printw("Wygrana gracza!");
+			printw("Wygrana gracza!\n");
 			break;
 		}
 		
@@ -106,14 +232,14 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 		if (board->isTerminal() == true)
 		{
 			board->displayWithCursor(column);
-			printw("Koniec ruchów...");
+			printw("Koniec ruchow...\n");
 			break;
 		}
 		board = computerTurn(board, adepth);
 		if (board->getH() == INF)
 		{
 			board->displayWithCursor(column);
-			printw("Wygrana komputera...");
+			printw("Wygrana komputera!\n");
 			break;
 		}
 	}
