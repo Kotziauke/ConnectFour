@@ -51,6 +51,7 @@ int main(int argc, char* argv[])
 		printw("\n");
 		attrset(COLOR_PAIR(pair_green) | A_BOLD);
 		printw(option == 4 ? "    [ START ]\n" : "      START\n");
+		attrset(COLOR_PAIR(pair_green));
 		printw(option == 5 ? "    [ WYJDZ ]\n" : "      WYJDZ\n");
 		attrset(COLOR_PAIR(pair_default));
 		switch (getch())

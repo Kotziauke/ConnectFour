@@ -2,7 +2,10 @@
 #define State_h_
 #include <vector>
 #include <cmath>
-#include "Constants.h"
+#include <limits>
+#define INF std::numeric_limits<double>::max()
+
+enum Player { human, computer };
 
 class State
 {

@@ -1,11 +1,8 @@
-Program : Main.o Constants.o State.o GameState.o AlphaBeta.o Ncurses.o
-	g++ Main.o Constants.o State.o GameState.o AlphaBeta.o Ncurses.o -lncurses -o Program
+Program : Main.o State.o GameState.o AlphaBeta.o Ncurses.o
+	g++ Main.o State.o GameState.o AlphaBeta.o Ncurses.o -lncurses -o Program
 
 Main.o : Main.cpp
 	g++ -c Main.cpp
-
-Constants.o : Constants.cpp Constants.h
-	g++ -c Constants.cpp
 
 State.o: State.cpp State.h
 	g++ -c State.cpp
