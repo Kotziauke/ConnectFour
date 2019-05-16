@@ -2,7 +2,6 @@
 #define State_h_
 #include <vector>
 #include <cmath>
-#include <iostream>
 #include "Constants.h"
 
 class State

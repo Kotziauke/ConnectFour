@@ -144,20 +144,27 @@ void GameState::makeChildren()
 
 void GameState::display()
 {
-	//std::cout << "Przed ruchem " << (whose_turn == human ? "gracza" : "komputera") << ":" << std::endl;
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			std::cout << board[x][y];
+			switch (board[x][y])
+			{
+			case 'o':
+				attrset(COLOR_PAIR(pair_human) | A_BOLD);
+				break;
+			case 'x':
+				attrset(COLOR_PAIR(pair_computer) | A_BOLD);
+				break;
+			case '.':
+				attrset(COLOR_PAIR(pair_empty) | A_BOLD);
+				break;
+			}
+			printw("%c", board[x][y]);
+			attrset(COLOR_PAIR(pair_default));
 		}
-		std::cout << std::endl;
+		printw("\n");
 	}
-	for (int x = 0; x < width; x++)
-	{
-		std::cout << x;
-	}
-	std::cout << std::endl << std::endl;
 }
 
 GameState::~GameState()

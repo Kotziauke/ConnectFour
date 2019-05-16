@@ -1,5 +1,5 @@
 Program : Main.o Constants.o State.o GameState.o AlphaBeta.o
-	g++ Main.o Constants.o State.o GameState.o AlphaBeta.o -o Program
+	g++ Main.o Constants.o State.o GameState.o AlphaBeta.o -lncurses -o Program
 
 Main.o : Main.cpp
 	g++ -c Main.cpp
