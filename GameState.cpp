@@ -160,15 +160,15 @@ void GameState::display()
 			switch (board[x][y])
 			{
 			case 'o':
-				attrset(COLOR_PAIR(pair_human) | A_BOLD);
+				attrset(COLOR_PAIR(pair_blue) | A_BOLD);
 				printw("o");
 				break;
 			case 'x':
-				attrset(COLOR_PAIR(pair_computer) | A_BOLD);
+				attrset(COLOR_PAIR(pair_red) | A_BOLD);
 				printw("x");
 				break;
 			case '.':
-				attrset(COLOR_PAIR(pair_empty) | A_BOLD);
+				attrset(COLOR_PAIR(pair_black) | A_BOLD);
 				printw(".");
 				break;
 			}
@@ -185,7 +185,7 @@ void GameState::displayWithCursor(int acolumn)
 	{
 		printw(" ");
 	}
-	attrset(COLOR_PAIR(pair_cursor) | A_BOLD);
+	attrset(COLOR_PAIR(pair_yellow) | A_BOLD);
 	printw("V\n");
 	attrset(COLOR_PAIR(pair_default));
 	for (int y = 0; y < height; y++)
@@ -195,22 +195,22 @@ void GameState::displayWithCursor(int acolumn)
 			switch (board[x][y])
 			{
 			case 'o':
-				attrset(COLOR_PAIR(pair_human) | A_BOLD);
+				attrset(COLOR_PAIR(pair_blue) | A_BOLD);
 				printw("o");
 				break;
 			case 'x':
-				attrset(COLOR_PAIR(pair_computer) | A_BOLD);
+				attrset(COLOR_PAIR(pair_red) | A_BOLD);
 				printw("x");
 				break;
 			case '.':
 				if (x == acolumn)
 				{
-					attrset(COLOR_PAIR(pair_cursor) | A_BOLD);
+					attrset(COLOR_PAIR(pair_yellow) | A_BOLD);
 					printw(":");
 				}
 				else
 				{
-					attrset(COLOR_PAIR(pair_empty) | A_BOLD);
+					attrset(COLOR_PAIR(pair_black) | A_BOLD);
 					printw(".");
 				}
 				break;

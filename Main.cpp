@@ -2,9 +2,8 @@
 #include <ctime>
 #include "GameState.h"
 #include "AlphaBeta.h"
+#include "Ncurses.h"
 
-void ncursesInit();
-void ncursesQuit();
 void startGame(int awidth, int aheight, Player awho_starts, double adepth);
 GameState* humanTurn(GameState* aobj, int acolumn);
 GameState* computerTurn(GameState* aobj, double adepth);
@@ -22,15 +21,22 @@ int main(int argc, char* argv[])
 	while (loop)
 	{
 		erase();
+		attrset(COLOR_PAIR(pair_yellow) | A_BOLD);
 		printw("  # Connect 4 #\n");
+		attrset(COLOR_PAIR(pair_yellow));
+		printw("  Maciej Gabrys\n");
 		printw("\n");
+		attrset(COLOR_PAIR(pair_blue) | A_BOLD);
 		printw("Rozmiar planszy:\n");
+		attrset(COLOR_PAIR(pair_blue));
 		printw("-szerokosc: ");
 		printw(option == 0 ? "< %d >\n" : "  %d\n", width);
 		printw("-wysokosc:  ");
 		printw(option == 1 ? "< %d >\n" : "  %d\n", height);
 		printw("\n");
+		attrset(COLOR_PAIR(pair_red) | A_BOLD);
 		printw("Poziom trudnosci:\n");
+		attrset(COLOR_PAIR(pair_red));
 		printw("-glebokosc: ");
 		printw(option == 2 ? "< %.0lf >\n" : "  %.0lf\n", depth);
 		printw("-zaczyna:  ");
@@ -43,8 +49,10 @@ int main(int argc, char* argv[])
 			printw(option == 3 ? "< SI >\n" : "  SI\n");
 		}
 		printw("\n");
+		attrset(COLOR_PAIR(pair_green) | A_BOLD);
 		printw(option == 4 ? "    [ START ]\n" : "      START\n");
 		printw(option == 5 ? "    [ WYJDZ ]\n" : "      WYJDZ\n");
+		attrset(COLOR_PAIR(pair_default));
 		switch (getch())
 		{
 		case 259: //up
@@ -143,26 +151,6 @@ int main(int argc, char* argv[])
 	}
 	ncursesQuit();
 	return 0;
-}
-
-void ncursesInit()
-{
-	initscr();
-	raw();
-	keypad(stdscr, true);
-	noecho();
-	start_color();
-	use_default_colors();
-	curs_set(0);
-	init_pair(pair_human, COLOR_BLUE, -1);
-	init_pair(pair_computer, COLOR_RED, -1);
-	init_pair(pair_empty, COLOR_BLACK, -1);
-	init_pair(pair_cursor, COLOR_YELLOW, -1);
-}
-
-void ncursesQuit()
-{
-	endwin();
 }
 
 void startGame(int awidth, int aheight, Player awho_starts, double adepth)
