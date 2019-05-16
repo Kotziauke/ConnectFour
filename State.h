@@ -18,6 +18,7 @@ protected:
 	virtual void makeChildren() = 0;
 public:
 	State(Player awhose_turn);
+	virtual bool isTerminal() = 0;
 	double getH();
 	State* getRootMove();
 	Player getWhoseTurn();

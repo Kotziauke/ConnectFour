@@ -39,6 +39,15 @@ GameState::GameState(GameState* aobj, int acolumn) :
 	}
 }
 
+bool GameState::isTerminal()
+{
+	if (getH() == -INF || getH() == INF || getChildren().empty() == true)
+	{
+		return true;
+	}
+	return false;
+}
+
 void GameState::copyBoard(GameState* aobj)
 {
 	board = new char*[width];

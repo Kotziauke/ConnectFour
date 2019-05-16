@@ -2,7 +2,7 @@
 
 std::pair<double, State*> alphaBeta(State* aobj, double depth, double alpha, double beta)
 {
-	if (depth == 0.0 || aobj->getH() == -INF || aobj->getH() == INF || aobj->getChildren().empty() == true)
+	if (depth == 0.0 || aobj->isTerminal() == true)
 	{
 		return std::pair<double, State*>(aobj->getH(), aobj);
 	}

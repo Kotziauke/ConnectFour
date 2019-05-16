@@ -18,6 +18,7 @@ private:
 	void copyBoard(GameState* aobj);
 public:
 	GameState(Player awhose_turn, int awidth, int aheight);
+	bool isTerminal() override;
 	GameState* dropChecker(int acolumn);
 	void display() override;
 	~GameState();
