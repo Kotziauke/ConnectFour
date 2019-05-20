@@ -178,9 +178,10 @@ void GameState::display()
 	}
 }
 
-void GameState::displayWithCursor(int acolumn)
+void GameState::displayWithCursor(int acolumn, const char* amsg)
 {
 	erase();
+	printw("%s\n", amsg);
 	for (int i = acolumn; i > 0; i--)
 	{
 		printw(" ");

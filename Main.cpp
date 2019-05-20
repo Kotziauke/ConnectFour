@@ -174,13 +174,12 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 		//ruch gracza:
 		if (board->isTerminal() == true)
 		{
-			board->displayWithCursor(column);
-			printw("Koniec ruchow...\n");
+			board->displayWithCursor(column, "Koniec ruchow...");
 			break;
 		}
 		while (1)
 		{
-			board->displayWithCursor(column);
+			board->displayWithCursor(column, "Ruch gracza:");
 			GameState* turn = NULL;
 			switch (getch())
 			{
@@ -209,31 +208,33 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 				break;
 			}
 		}
-		//board = humanTurn(board, getch() - 48);
 		if (board->getH() == -INFINITY)
 		{
-			board->displayWithCursor(column);
-			printw("Wygrana gracza!\n");
+			board->displayWithCursor(column, "Wygrana gracza!");
 			break;
 		}
 		
 		//ruch komputera:
 		if (board->isTerminal() == true)
 		{
-			board->displayWithCursor(column);
-			printw("Koniec ruchow...\n");
+			board->displayWithCursor(column, "Koniec ruchow...");
 			break;
 		}
+		board->displayWithCursor(column, "Ruch komputera:");
+		printw("Liczenie...\n");
+		refresh();
 		board = computerTurn(board, adepth);
 		if (board->getH() == INFINITY)
 		{
-			board->displayWithCursor(column);
-			printw("Wygrana komputera!\n");
+			board->displayWithCursor(column, "Wygrana komputera!");
 			break;
 		}
 	}
 	
 	getch();
+	
+	printw("Zwalnianie pamieci...\n");
+	refresh();
 	delete initial_state; //usunie rekurencyjnie wszystkie stany potomne
 }
 
