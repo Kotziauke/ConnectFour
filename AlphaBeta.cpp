@@ -34,7 +34,7 @@ std::pair<double, State*> alphaBeta(State* aobj, double depth, double alpha, dou
 			{
 				ret = temp;
 			}
-			alpha = std::min(beta, ret.first);
+			beta = std::min(beta, ret.first);
 			if (alpha >= beta)
 			{
 				break;
