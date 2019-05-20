@@ -251,7 +251,7 @@ GameState* humanTurn(GameState* aobj, int acolumn)
 
 GameState* computerTurn(GameState* aobj, double adepth)
 {
-	std::pair<double, State*> turn = alphaBeta(aobj, adepth, -INFINITY, INFINITY);
+	std::pair<double, State*> turn = alphaBeta(aobj, adepth, -INF, INF);
 	aobj = dynamic_cast<GameState*>(turn.second->getRootMove());
 	aobj->makeRoot();
 	return aobj;

@@ -103,7 +103,7 @@ void GameState::computeH()
 					buf[3] = getCell(x + 2 * dx, y + 2 * dy);
 					buf[4] = getCell(x + 3 * dx, y + 3 * dy);
 					int len = 1;
-					while (buf[1 + len] == buf[1] && len < 4)
+					while (len < 4 && buf[1 + len] == buf[1])
 					{
 						len++;
 					}
@@ -116,7 +116,7 @@ void GameState::computeH()
 						h += buf[1] == 'o' ? -16 : 16;
 						break;
 					case 3:
-						h += buf[1] == 'o' ? -512 : 512;
+						h += buf[1] == 'o' ? -256 : 256;
 						break;
 					case 4:
 						h = buf[1] == 'o' ? -INF : INF;
