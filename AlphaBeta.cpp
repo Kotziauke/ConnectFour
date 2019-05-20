@@ -10,7 +10,7 @@ std::pair<double, State*> alphaBeta(State* aobj, double depth, double alpha, dou
 	switch (aobj->getWhoseTurn())
 	{
 	case computer: //gracz maksymalizujący
-		ret.first = -INF;
+		ret.first = -INFINITY;
 		for (State* child : aobj->getChildren())
 		{
 			std::pair<double, State*> temp = alphaBeta(child, depth - 0.5, alpha, beta);
@@ -26,7 +26,7 @@ std::pair<double, State*> alphaBeta(State* aobj, double depth, double alpha, dou
 		}
 		return ret;
 	case human: //gracz minimalizujący
-		ret.first = INF;
+		ret.first = INFINITY;
 		for (State* child : aobj->getChildren())
 		{
 			std::pair<double, State*> temp = alphaBeta(child, depth - 0.5, alpha, beta);

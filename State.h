@@ -2,8 +2,6 @@
 #define State_h_
 #include <vector>
 #include <cmath>
-#include <limits>
-#define INF INFINITY
 
 enum Player { human, computer };
 

@@ -41,7 +41,7 @@ GameState::GameState(GameState* aobj, int acolumn) :
 
 bool GameState::isTerminal()
 {
-	if (getH() == -INF || getH() == INF || getChildren().empty() == true)
+	if (getH() == -INFINITY || getH() == INFINITY || getChildren().empty() == true)
 	{
 		return true;
 	}
@@ -119,7 +119,7 @@ void GameState::computeH()
 						h += buf[1] == 'o' ? -512 : 512;
 						break;
 					case 4:
-						h = buf[1] == 'o' ? -INF : INF;
+						h = buf[1] == 'o' ? -INFINITY : INFINITY;
 						return;
 					}
 				}

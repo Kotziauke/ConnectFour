@@ -210,7 +210,7 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 			}
 		}
 		//board = humanTurn(board, getch() - 48);
-		if (board->getH() == -INF)
+		if (board->getH() == -INFINITY)
 		{
 			board->displayWithCursor(column);
 			printw("Wygrana gracza!\n");
@@ -225,7 +225,7 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 			break;
 		}
 		board = computerTurn(board, adepth);
-		if (board->getH() == INF)
+		if (board->getH() == INFINITY)
 		{
 			board->displayWithCursor(column);
 			printw("Wygrana komputera!\n");
@@ -251,7 +251,7 @@ GameState* humanTurn(GameState* aobj, int acolumn)
 
 GameState* computerTurn(GameState* aobj, double adepth)
 {
-	std::pair<double, State*> turn = alphaBeta(aobj, adepth, -INF, INF);
+	std::pair<double, State*> turn = alphaBeta(aobj, adepth, -INFINITY, INFINITY);
 	aobj = dynamic_cast<GameState*>(turn.second->getRootMove());
 	aobj->makeRoot();
 	return aobj;
