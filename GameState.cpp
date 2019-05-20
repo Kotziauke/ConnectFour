@@ -116,7 +116,7 @@ void GameState::computeH()
 						h += buf[1] == 'o' ? -16 : 16;
 						break;
 					case 3:
-						h += buf[1] == 'o' ? -256 : 256;
+						h += buf[1] == 'o' ? -512 : 512;
 						break;
 					case 4:
 						h = buf[1] == 'o' ? -INF : INF;

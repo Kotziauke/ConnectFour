@@ -14,7 +14,7 @@ std::pair<double, State*> alphaBeta(State* aobj, double depth, double alpha, dou
 		for (State* child : aobj->getChildren())
 		{
 			std::pair<double, State*> temp = alphaBeta(child, depth - 0.5, alpha, beta);
-			if (temp.first >= ret.first)
+			if (ret.second == NULL || temp.first > ret.first)
 			{
 				ret = temp;
 			}
@@ -30,7 +30,7 @@ std::pair<double, State*> alphaBeta(State* aobj, double depth, double alpha, dou
 		for (State* child : aobj->getChildren())
 		{
 			std::pair<double, State*> temp = alphaBeta(child, depth - 0.5, alpha, beta);
-			if (temp.first <= ret.first)
+			if (ret.second == NULL || temp.first < ret.first)
 			{
 				ret = temp;
 			}

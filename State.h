@@ -3,7 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <limits>
-#define INF std::numeric_limits<double>::max()
+#define INF INFINITY
 
 enum Player { human, computer };
 
