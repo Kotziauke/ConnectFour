@@ -25,6 +25,7 @@ int main(int argc, char* argv[])
 		printw("  # Connect 4 #\n");
 		attrset(COLOR_PAIR(pair_yellow));
 		printw("  Maciej Gabrys\n");
+		printw(" Jan Jarmolowicz\n");
 		printw("\n");
 		attrset(COLOR_PAIR(pair_blue) | A_BOLD);
 		printw("Rozmiar planszy:\n");
@@ -199,6 +200,8 @@ void startGame(int awidth, int aheight, Player awho_starts, double adepth)
 				turn = humanTurn(board, column);
 				break;
 			case 27: //escape
+				printw("Zwalnianie pamieci...\n");
+				refresh();
 				delete initial_state;
 				return;
 			}
