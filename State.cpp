@@ -55,7 +55,7 @@ void State::makeRoot()
 
 State::~State()
 {
-	for(State* child : children)
+	for (State* child : children)
 	{
 		delete child;
 	}
